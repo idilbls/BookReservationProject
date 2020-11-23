@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BookReservationProject.Models.BookViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Summary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.BookName, "Details", new { id=item.BookId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @if (item.IsAvailable)
+                {
+                    @Html.ActionLink("Borrow", "Create", "Borrows", new { id = item.BookId }, new { @class = "btn btn-primary" })
+                }
+                else
+                {
+                    @Html.ActionLink("Return", "Edit", "Borrows", new { id = item.BookId }, new { @class = "btn btn-success" })
+                }
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
